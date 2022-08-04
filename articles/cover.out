@@ -1,0 +1,26 @@
+mode: set
+github.com/maslow123/buddyku-users/pkg/services/articles.go:13.112,14.21 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:17.2,17.23 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:20.2,20.24 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:25.2,36.16 5 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:41.2,48.18 5 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:14.21,16.3 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:17.23,19.3 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:20.24,22.3 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:36.16,39.3 2 0
+github.com/maslow123/buddyku-users/pkg/services/articles.go:51.112,52.17 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:57.2,64.16 3 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:69.2,90.16 6 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:98.2,104.18 5 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:52.17,54.3 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:64.16,67.3 2 0
+github.com/maslow123/buddyku-users/pkg/services/articles.go:90.16,92.27 2 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:95.3,95.70 1 0
+github.com/maslow123/buddyku-users/pkg/services/articles.go:92.27,94.4 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:107.130,108.24 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:112.2,117.16 5 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:122.2,125.18 3 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:108.24,110.3 1 1
+github.com/maslow123/buddyku-users/pkg/services/articles.go:117.16,120.3 2 1
+github.com/maslow123/buddyku-users/pkg/services/response.go:5.88,10.2 1 1
+github.com/maslow123/buddyku-users/pkg/services/response.go:12.113,17.2 1 1

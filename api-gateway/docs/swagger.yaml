@@ -1,0 +1,361 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  Article:
+    properties:
+      content:
+        type: string
+        x-go-name: Content
+      created_at:
+        format: int32
+        type: integer
+        x-go-name: CreatedAt
+      created_by:
+        format: int32
+        type: integer
+        x-go-name: CreatedBy
+      id:
+        format: int32
+        type: integer
+        x-go-name: Id
+      point:
+        format: int32
+        type: integer
+        x-go-name: Point
+      title:
+        type: string
+        x-go-name: Title
+      updated_at:
+        format: int32
+        type: integer
+        x-go-name: UpdatedAt
+      view:
+        format: int32
+        type: integer
+        x-go-name: View
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/articles/pb
+  CreateArticleRequestBody:
+    properties:
+      content:
+        type: string
+        x-go-name: Content
+      title:
+        type: string
+        x-go-name: Title
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/articles/routes
+  GenericResponse:
+    properties:
+      article:
+        $ref: '#/definitions/Article'
+      error:
+        type: string
+        x-go-name: Error
+      status:
+        format: int64
+        type: integer
+        x-go-name: Status
+    title: GenericResponse represents body of Register response.
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/articles/pb
+  LoginRequest:
+    description: Login
+    properties:
+      password:
+        type: string
+        x-go-name: Password
+      username:
+        type: string
+        x-go-name: Username
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/users/pb
+  LoginResponse:
+    properties:
+      error:
+        type: string
+        x-go-name: Error
+      status:
+        format: int64
+        type: integer
+        x-go-name: Status
+      token:
+        type: string
+        x-go-name: Token
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/users/pb
+  RegisterRequest:
+    description: Register
+    properties:
+      level:
+        format: int32
+        type: integer
+        x-go-name: Level
+      name:
+        type: string
+        x-go-name: Name
+      password:
+        type: string
+        x-go-name: Password
+      username:
+        type: string
+        x-go-name: Username
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/users/pb
+  SetArticlePointRequestBody:
+    properties:
+      article_id:
+        format: int32
+        type: integer
+        x-go-name: ArticleID
+      point:
+        format: int32
+        type: integer
+        x-go-name: Point
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/users/routes
+  ShowUserResponse:
+    properties:
+      error:
+        type: string
+        x-go-name: Error
+      limit:
+        format: int32
+        type: integer
+        x-go-name: Limit
+      page:
+        format: int32
+        type: integer
+        x-go-name: Page
+      status:
+        format: int64
+        type: integer
+        x-go-name: Status
+      users:
+        items:
+          $ref: '#/definitions/User'
+        type: array
+        x-go-name: Users
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/users/pb
+  User:
+    properties:
+      created_at:
+        format: int32
+        type: integer
+        x-go-name: CreatedAt
+      name:
+        type: string
+        x-go-name: Name
+      updated_at:
+        format: int32
+        type: integer
+        x-go-name: UpdatedAt
+      user_point:
+        format: int32
+        type: integer
+        x-go-name: UserPoint
+      username:
+        type: string
+        x-go-name: Username
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/users/pb
+  UserArticlePointResponse:
+    properties:
+      error:
+        type: string
+        x-go-name: Error
+      status:
+        format: int64
+        type: integer
+        x-go-name: Status
+      total_point:
+        format: int32
+        type: integer
+        x-go-name: TotalPoint
+    type: object
+    x-go-package: github.com/maslow123/api-gateway/pkg/articles/pb
+host: http://localhost:8000
+info:
+  description: Documentation of BuddyAPI.
+  title: BuddyAPI.
+  version: 1.0.0
+paths:
+  /articles/create:
+    post:
+      description: For create new article
+      operationId: CreateArticleEndpoint
+      parameters:
+      - in: body
+        name: CreateArticleRequest
+        required: true
+        schema:
+          $ref: '#/definitions/CreateArticleRequestBody'
+      responses:
+        "200":
+          $ref: '#/responses/CreateArticleEndpoint'
+      tags:
+      - Articles
+  /articles/detail/{article_id}:
+    get:
+      description: For get detail article
+      operationId: DetailArticleEndpoint
+      parameters:
+      - format: int32
+        in: path
+        name: article_id
+        required: true
+        type: integer
+        x-go-name: ArticleID
+      responses:
+        "200":
+          $ref: '#/responses/DetailArticleEndpoint'
+      tags:
+      - Articles
+  /articles/point:
+    get:
+      description: For get total user point based on user id (get from token)
+      operationId: GetUserArticlePointEndpoint
+      responses:
+        "200":
+          $ref: '#/responses/GetUserArticlePointEndpoint'
+      tags:
+      - Articles
+  /users/create:
+    post:
+      description: Register for create new user or publisher
+      operationId: RegisterEndpoint
+      parameters:
+      - description: request body for register or create new user / publisher
+        in: body
+        name: RegisterRequest
+        required: true
+        schema:
+          $ref: '#/definitions/RegisterRequest'
+      responses:
+        "201":
+          $ref: '#/responses/registerResponse'
+      tags:
+      - Users
+  /users/list:
+    get:
+      description: For show all user / publisher
+      operationId: ShowRegisterUserEndpoint
+      parameters:
+      - example: 1
+        format: int32
+        in: query
+        name: Limit
+        required: true
+        type: integer
+      - example: 10
+        format: int32
+        in: query
+        name: Page
+        required: true
+        type: integer
+      responses:
+        "200":
+          $ref: '#/responses/ShowRegisterUserResponse'
+      tags:
+      - Users
+  /users/login:
+    post:
+      description: For login user company / publisher
+      operationId: LoginEndpoint
+      parameters:
+      - description: request login for authentication
+        in: body
+        name: LoginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/LoginRequest'
+      responses:
+        "200":
+          $ref: '#/responses/loginResponse'
+      tags:
+      - Users
+  /users/point:
+    get:
+      description: For show all user / publisher point
+      operationId: ShowUserPoint
+      parameters:
+      - example: 1
+        format: int32
+        in: query
+        name: Limit
+        required: true
+        type: integer
+      - example: 10
+        format: int32
+        in: query
+        name: Page
+        required: true
+        type: integer
+      responses:
+        "200":
+          $ref: '#/responses/ShowAllUserPoint'
+      tags:
+      - Users
+  /users/set-point:
+    put:
+      description: For set article point based on ArticleID
+      operationId: SetArticlePoint
+      parameters:
+      - in: body
+        name: SetArticlePointPointRequest
+        required: true
+        schema:
+          $ref: '#/definitions/SetArticlePointRequestBody'
+      responses:
+        "200":
+          $ref: '#/responses/SetArticlePoint'
+      tags:
+      - Users
+produces:
+- application/json
+responses:
+  CreateArticleEndpoint:
+    description: Response for create article
+    schema:
+      $ref: '#/definitions/GenericResponse'
+  DetailArticleEndpoint:
+    description: Response for detail article
+    schema:
+      $ref: '#/definitions/GenericResponse'
+  GetUserArticlePointEndpoint:
+    description: Response for get user article point
+    schema:
+      $ref: '#/definitions/UserArticlePointResponse'
+  SetArticlePoint:
+    description: Response for set article point
+    schema:
+      $ref: '#/definitions/GenericResponse'
+  ShowAllUserPoint:
+    description: List all user point
+    schema:
+      $ref: '#/definitions/ShowUserResponse'
+  ShowRegisterUserResponse:
+    description: List registered user
+    schema:
+      $ref: '#/definitions/ShowUserResponse'
+  loginResponse:
+    description: This is response from login
+    schema:
+      $ref: '#/definitions/LoginResponse'
+  registerResponse:
+    description: This text will appear as description of your response body.
+    schema:
+      $ref: '#/definitions/GenericResponse'
+schemes:
+- http
+security:
+- key:
+  - '[]'
+securityDefinitions:
+  key:
+    in: header
+    name: jwt-token
+    type: apiKey
+swagger: "2.0"

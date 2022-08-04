@@ -1,0 +1,77 @@
+syntax = "proto3";
+package users;
+
+option go_package = "./pkg/users/pb";
+
+service UserService {
+  rpc Register(RegisterRequest) returns (GenericResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+
+  rpc ShowRegisterUser(ShowUserRequest) returns (ShowUserResponse) {}
+  rpc ShowAllUserPoint(ShowUserRequest) returns (ShowUserResponse) {}
+  rpc SetPoint(SetPointRequest) returns (GenericResponse) {}
+}
+
+// Register
+message RegisterRequest {
+  string name = 1;
+  string username = 2;
+  string password = 3;
+  int32 level = 4;
+}
+
+// GenericResponse represents body of Register response.
+message GenericResponse {
+  int64 status = 1;
+  string error = 2;
+}
+
+// Login
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  int64 status = 1;
+  string error = 2;
+  string token = 3;
+}
+
+// Validate
+message ValidateRequest { string token = 1; }
+
+message ValidateResponse {
+  int64 status = 1;
+  string error = 2;
+  int32 user_id = 3;
+}
+
+message User {
+  string username = 1;
+  string name = 2;
+  int32 created_at = 3;
+  int32 updated_at = 4;
+  int32 user_point = 5;
+}
+
+message ShowUserRequest {
+  int32 limit = 1;
+  int32 page = 2;
+}
+
+message ShowUserResponse {
+  int64 status = 1;
+  string error = 2;
+  int32 page = 4;
+  int32 limit = 3;
+  repeated User users = 5;
+}
+
+// Set point for article
+message SetPointRequest {
+  int32 article_id = 1;
+  int32 user_id = 2;
+  int32 point = 3;
+}

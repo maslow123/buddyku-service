@@ -1,0 +1,18 @@
+pull_api: 
+	docker-compose down
+	# docker pull maslow123/users
+	# docker pull maslow123/products
+	# docker pull maslow123/orders	
+	# docker pull maslow123/api-gateway
+
+infratest: pull_api
+	docker-compose up -d --force-recreate testdb
+	echo Starting for db...
+	sleep 15
+	docker-compose up migratedb	
+
+runapi:
+	docker-compose up -d --force-recreate apiuser
+	docker-compose up -d --force-recreate apiproduct
+	docker-compose up -d --force-recreate apiorder
+	docker-compose up -d --force-recreate api-gateway

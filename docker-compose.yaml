@@ -1,0 +1,77 @@
+version: '3'
+services:  
+  testdb:
+    image: postgres:latest
+    container_name: testdb
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      PGPASSWORD: ${DB_PASS}
+      PGDATA: /data
+    ports:
+      - '5433:5432'
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+    networks:
+      - buddyku
+  migratedb:
+    image: migrate/migrate
+    volumes:
+      - ./migrations:/migrations
+    command: ["-path", "/migrations", "-database",  "postgresql://${DB_USERNAME}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=disable", "up"]
+    links:
+      - testdb
+    networks:
+      - buddyku
+  userapi:
+    image: maslow123/buddyku-users:latest
+    container_name: userapi
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+    ports:
+      - 50051:50051
+    restart: on-failure    
+    networks:
+      - buddyku
+  articleapi:
+    image: maslow123/buddyku-articles:latest
+    container_name: articleapi
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+    ports:
+      - 50052:50052
+    restart: on-failure    
+    networks:
+      - buddyku
+  api-gateway:
+    image: maslow123/buddyku-apigateway:latest
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: docker/Dockerfile    
+    ports:
+      - 8000:8000
+    restart: on-failure    
+    networks:
+      - buddyku
+volumes:
+  database_postgres:
+
+networks:
+  buddyku:
+    driver: bridge
